@@ -20,7 +20,7 @@ export class PieChartComponent implements OnInit {
       "value": 7200000
     }
   ];
-  view: any[] = [650, 350];
+  view: any[] = [630, 320];
 
   // options
   showLegend = false;
