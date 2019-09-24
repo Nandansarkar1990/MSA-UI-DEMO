@@ -3,7 +3,7 @@ export interface Frequency {
     frequency: number;
 }
 
-export const STATISTICS: Frequency[] = [
+export const STATISTICS = [
     {letter: 'A', frequency: .08167},
     {letter: 'B', frequency: .01492},
     {letter: 'C', frequency: .02782},

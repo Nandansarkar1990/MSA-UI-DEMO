@@ -8,16 +8,12 @@ import { Component, OnInit } from '@angular/core';
 export class PieChartComponent implements OnInit {
   single = [
     {
-      "name": "Germany",
-      "value": 8940000
+      "name": "VeriFone Inc",
+      "value": 2520678.7
     },
     {
-      "name": "USA",
-      "value": 5000000
-    },
-    {
-      "name": "France",
-      "value": 7200000
+      "name": "Creative Mobile Technologies, LLC",
+      "value": 856750.11
     }
   ];
   view: any[] = [630, 320];
