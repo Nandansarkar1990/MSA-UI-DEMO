@@ -47,7 +47,7 @@ export const routes: Routes = [
     path: '',
     component: DefaultLayoutComponent,
     data: {
-      title: 'Home'
+      title: ''
     },
     children: [
       {
@@ -65,6 +65,10 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule)
+      },
+      {
+        path: 'home',
+        loadChildren: () => import('./views/home/home.module').then(m => m.HomeModule)
       },
       {
         path: 'icons',

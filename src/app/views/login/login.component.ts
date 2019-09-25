@@ -36,6 +36,6 @@ export class LoginComponent {
     if (this.loginForm.invalid) {
         return;
     }
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/home']);
   }
 }

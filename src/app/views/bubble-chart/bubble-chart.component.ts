@@ -1,6 +1,7 @@
 import { Component, OnInit, ValueProvider } from '@angular/core';
 
 import * as d3 from 'd3'
+import { ChartService } from '../../service/chart.service';
 
 
 
@@ -10,25 +11,45 @@ import * as d3 from 'd3'
   styleUrls: ['./bubble-chart.component.scss']
 })
 export class BubbleChartComponent implements OnInit {
-
-  dataset = {
-    "children": [{ "Name": "VeriFone Inc", "Count": 2520678.7 },
-    { "Name": "Creative Mobile Technologies, LLC", "Count": 856750.11 }]
-  };
-  constructor() {
+  Data: any;
+  jsonData = [];
+  finalData: any;
+  // dataset = {
+  //   "children": [{ "Name": "VeriFone Inc", "Count": 2520678.7 },
+  //   { "Name": "Creative Mobile Technologies, LLC", "Count": 856750.11 }]
+  // };
+  constructor(private chartData: ChartService) {
     // this.d3 = new d3();
   }
 
   ngOnInit() {
-    this.createChart();
+    this.chartData.getData().subscribe((res: any) => {
+      // this.Data = res;
+      //   console.log("bar chart data", this.Data);
+      this.generateJson(res.rows)
+      this.createChart(this.finalData);
+    });
   }
 
-  createChart() {
+  private generateJson(rows) {
+    this.jsonData = rows;
+    let tempData = this.jsonData.map((data) => {
+      data.Name = data['vendor_name'];
+      data.Count = data['Total_Amount_CY'];
+      return data;
+    })
+    this.finalData = {
+      'children': tempData
+    }
+    console.log("final data ", this.finalData)
+  };
+
+  createChart(data) {
 
     var diameter = 300;
     var color = d3.scaleOrdinal().range(d3.schemeAccent);
 
-    var bubble = d3.pack(this.dataset)
+    var bubble = d3.pack(data)
       .size([diameter, diameter])
       .padding(1.5);
 
@@ -38,7 +59,7 @@ export class BubbleChartComponent implements OnInit {
       .attr("height", diameter)
       .attr("class", "bubble");
 
-    var nodes = d3.hierarchy(this.dataset)
+    var nodes = d3.hierarchy(data)
       .sum(function (d) { return d.Count; });
 
     var node = svg.selectAll(".node")
@@ -53,10 +74,10 @@ export class BubbleChartComponent implements OnInit {
         return "translate(" + d.x + "," + d.y + ")";
       });
 
-    node.append("title")
-      .text(function (d) {
-        return d.Name + ": " + d.Count;
-      });
+    // node.append("title")
+    //   .text(function (d) {
+    //     return d.Name + ": " + d.Count;
+    //   });
 
     node.append("circle")
       .attr("r", function (d) {

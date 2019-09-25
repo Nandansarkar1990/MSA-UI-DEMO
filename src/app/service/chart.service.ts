@@ -46,25 +46,13 @@ export class ChartService {
   //   }
   // };
 
-  public getData(data, token) {
-    // if(data) {
-      localStorage.setItem('Authorization', '_dremio1q8voeql2s0a1m91jrclecf22i');
-    //   var reqHeader = new HttpHeaders({ 
-    //     'Content-Type': 'application/json',
-    //     'Access-Control-Allow-Origin':'*',
-    //     'Authorization':  localStorage.getItem('Authorization')
-    //  });
-    var reqHeader = new HttpHeaders()
-    reqHeader.append('Access-Control-Allow-Origin', 'http://localhost:9047')
-    reqHeader.append('Access-Control-Allow-Headers', 'Content-type')
-    // reqHeader.append('Content-Type', 'application/json')
-    reqHeader.append('Authorization', '_dremio1q8voeql2s0a1m91jrclecf22i')
+  public getData() {
+    let reqHeader = new HttpHeaders()
+    reqHeader.append('Content-Type', 'application/json')
      console.log(reqHeader);
-     this.http.get(`https://cors-anywhere.herokuapp.com/${this.uri}/api/v3/22772b1a-5290-e8cc-b44b-3383f2d3c400/results`,  {headers: reqHeader}).subscribe(data => {
-      if(data) {
-          console.log(data);
-        }
-      })
-    // }
+     let payload = {
+        "sql": "SELECT * FROM usecase.VendorWiseTaxiSales "
+      }
+      return this.http.post(`http://localhost:9000/msa_poc/v1/data`, payload, {headers: reqHeader})
   }
 }

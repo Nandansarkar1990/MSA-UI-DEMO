@@ -6,6 +6,7 @@ import * as d3Array from 'd3-array';
 import * as d3Axis from 'd3-axis';
 
 import { STOCKS } from '../../service/shared';
+import { ChartService } from '../../service/chart.service';
 
 @Component({
   selector: 'app-bar-chart',
@@ -14,7 +15,7 @@ import { STOCKS } from '../../service/shared';
   styleUrls: ['./bar-chart.component.scss']
 })
 export class BarChartComponent implements OnInit {
-
+    Data: any;
     jsonData = [];  
     multi: any[];
 
@@ -34,18 +35,25 @@ export class BarChartComponent implements OnInit {
         domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
     };
 
-    constructor() {
+    constructor(private chartData: ChartService) {
         
     }
     ngOnInit() {
-        this.generateJson();
+        this.chartData.getData().subscribe((res)=>{
+            this.Data = res;
+            console.log("bar chart data", this.Data)
+            this.generateJson(this.Data.rows);
+        });
+        
     }
 
-    private generateJson() {
-        for(var i=0; i< STOCKS.length; i++) {
-            this.jsonData[i] = {'name' : STOCKS[i]['vendor_name'], 'value': STOCKS[i]['Total_Amount_CY']}
-        }
-        console.log(this.jsonData);
+    private generateJson(rows) {
+        this.jsonData = rows;
+        this.jsonData = this.jsonData.map((data) => {
+        data.name = data['vendor_name'];
+        data.value = data['Total_Amount_CY'];
+        return data;
+        })
     };
     onSelect(event) {
         console.log(event);

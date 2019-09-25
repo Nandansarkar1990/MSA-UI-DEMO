@@ -8,7 +8,7 @@ import * as d3Array from 'd3-array';
 import * as d3Axis from 'd3-axis'
 
 import { TEMPERATURES } from '../../service/shared';
-// import { ChartService } from '../../service/chart.service';
+import { ChartService } from '../../service/chart.service';
 
 @Component({
   selector: 'app-line-chart',
@@ -31,12 +31,12 @@ export class LineChartComponent implements OnInit {
     z;
     line;
 
-    constructor() {
+    constructor(private chartService: ChartService) {
 
     }
 
     ngOnInit() {
-
+        this.chartService.getData();
         this.data = TEMPERATURES.map((v) => v.values.map((v) => v.date ))[0];
         //.reduce((a, b) => a.concat(b), []);
 
