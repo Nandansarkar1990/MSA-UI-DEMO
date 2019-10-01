@@ -12,6 +12,7 @@ import { BarChartComponent } from '../bar-chart/bar-chart.component';
 import { PieChartComponent } from '../pie-chart/pie-chart.component';
 import { DonutChartComponent } from '../donut-chart/donut-chart.component';
 import { BubbleChartComponent } from '../bubble-chart/bubble-chart.component';
+import { ContextMenuComponent } from '../context-menu/context-menu.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { BubbleChartComponent } from '../bubble-chart/bubble-chart.component';
     BarChartComponent,
     PieChartComponent,
     DonutChartComponent,
-    BubbleChartComponent
+    BubbleChartComponent,
+    ContextMenuComponent
   ]
 })
 export class DashboardModule { }

@@ -11,5 +11,10 @@
   [showYAxisLabel]="showYAxisLabel"
   [xAxisLabel]="xAxisLabel"
   [yAxisLabel]="yAxisLabel"
-  (select)="onSelect($event)">
+  (click)="disableContextMenu()"
+  (contextmenu)="onrightClick($event)">
 </ngx-charts-bar-vertical>
+
+<div *ngIf="contextmenu">
+  <app-context-menu [contextmenuX]="contextmenuX" [contextmenuY]="contextmenuY" (colorCodeData)="receiveColorCode($event)"></app-context-menu>
+</div>

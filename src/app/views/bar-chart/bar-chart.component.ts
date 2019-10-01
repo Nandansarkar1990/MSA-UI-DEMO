@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, Input, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 
 import * as d3 from 'd3-selection';
 import * as d3Scale from 'd3-scale';
@@ -11,14 +11,16 @@ import { ChartService } from '../../service/chart.service';
 @Component({
   selector: 'app-bar-chart',
   encapsulation: ViewEncapsulation.None,
+//   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './bar-chart.component.html',
   styleUrls: ['./bar-chart.component.scss']
 })
 export class BarChartComponent implements OnInit {
+    updatedColor: any;
     Data: any;
     jsonData = [];  
     multi: any[];
-
+    currentTriggerdEvent: any;
     view: any[] = [300, 320];
 
     // options
@@ -35,9 +37,14 @@ export class BarChartComponent implements OnInit {
         domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
     };
 
-    constructor(private chartData: ChartService) {
+    contextmenu = false;
+    contextmenuX = 0;
+    contextmenuY = 0;
+
+    constructor(private chartData: ChartService, private cdr: ChangeDetectorRef) {
         
     }
+
     ngOnInit() {
         this.chartData.getData().subscribe((res)=>{
             this.Data = res;
@@ -59,5 +66,39 @@ export class BarChartComponent implements OnInit {
         console.log(event);
     }
 
+    onrightClick(event){
+        event.preventDefault();
+        console.log(event);
+        this.contextmenuX=event.clientX
+        this.contextmenuY=event.clientY
+        this.contextmenu=true;
+        this.currentTriggerdEvent = event;
+    }
 
+    disableContextMenu(){
+        this.contextmenu= false;
+    }
+
+    receiveColorCode(event) {
+        this.updatedColor = event;
+        console.log("printed from bar chart"+ event);
+        let currentIndex = this.getSelectedIndex();
+        const colorScheme = this.colorScheme;
+        const newColorScheme = {...colorScheme}
+        newColorScheme.domain[currentIndex] = event;
+        this.colorScheme = newColorScheme;
+        this.contextmenu= false;
+    }
+
+    private getSelectedIndex() {
+        let ele = document.getElementsByClassName('bar');
+        console.log(this.currentTriggerdEvent);
+        for(var i=0; i< ele.length; i++) {
+            if(ele[i].outerHTML && this.currentTriggerdEvent.target) {
+                if(ele[i].outerHTML === this.currentTriggerdEvent.target.outerHTML) {
+                    return i;
+                }
+            }
+        }
+    }
 }

@@ -1,0 +1,28 @@
+<div class="contextmenu" [ngStyle]="{'left.px': x, 'top.px': y}">
+    <ul class="list-group">
+        <li class="list-group-item" (click)="changeColor(content)" >Change Color</li>
+        <li class="list-group-item">Second item</li>
+        <li class="list-group-item">Third item</li>
+    </ul>
+</div>
+
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Chose Color</h4>
+        <button type="button" class="close" aria-label="Close" 
+
+        (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+            </button>
+    </div>
+    <div class="modal-body">
+        <input type="color" [(ngModel)]="colorCode">
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close(colorCode)">Save</button>
+    </div>
+</ng-template>
+      
+
+
