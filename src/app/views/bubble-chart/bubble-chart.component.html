@@ -1,1 +1,5 @@
-<div id="bubble"></div>
+<div id="bubble">
+    <div *ngIf="contextmenu">
+        <app-context-menu [contextmenuX]="contextmenuX" [contextmenuY]="contextmenuY" (colorCodeData)="receiveColorCode($event)"></app-context-menu>
+    </div>
+</div>

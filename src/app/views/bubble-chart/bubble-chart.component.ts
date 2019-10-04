@@ -14,6 +14,10 @@ export class BubbleChartComponent implements OnInit {
   Data: any;
   jsonData = [];
   finalData: any;
+  contextmenu = false;
+  contextmenuX = 0;
+  contextmenuY = 0;
+  currentTriggerdEvent;
   // dataset = {
   //   "children": [{ "Name": "VeriFone Inc", "Count": 2520678.7 },
   //   { "Name": "Creative Mobile Technologies, LLC", "Count": 856750.11 }]
@@ -45,7 +49,7 @@ export class BubbleChartComponent implements OnInit {
   };
 
   createChart(data) {
-
+    var that = this;
     var diameter = 300;
     var color = d3.scaleOrdinal().range(d3.schemeAccent);
 
@@ -113,6 +117,31 @@ export class BubbleChartComponent implements OnInit {
 
     d3.select(self.frameElement)
       .style("height", diameter + "px");
+    svg.on('contextmenu', function(){ 
+      d3.event.preventDefault();
+      that.onrightClick(d3.event);
+    });
+  }
+
+  onrightClick(event){
+    event.preventDefault();
+    console.log(event);
+    this.contextmenuX=200;
+    this.contextmenuY=200;
+    this.contextmenu=true;
+    this.currentTriggerdEvent = event;
+  }
+
+  disableContextMenu(){
+      this.contextmenu= false;
+  }
+
+  receiveColorCode(event) {
+    console.log(event);
+    console.log("printed from bubble chart"+ event);
+    var getcolorFromOUter =  this.currentTriggerdEvent.target.outerHTML.split(":")[1].split(">")[0].replace(/[\"]/g, "");
+    this.currentTriggerdEvent.target.outerHTML = this.currentTriggerdEvent.target.outerHTML.replace(getcolorFromOUter, event);
+    this.contextmenu= false;
   }
 
 }

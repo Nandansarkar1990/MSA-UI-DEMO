@@ -7,5 +7,10 @@
       [labels]="showLabels"
       [doughnut]="doughnut"
       [gradient]="gradient"
-      (select)="onSelect($event)">
+      (click)="disableContextMenu()"
+      (contextmenu)="onrightClick($event)">
 </ngx-charts-pie-chart>
+
+<div *ngIf="contextmenu">
+      <app-context-menu [contextmenuX]="contextmenuX" [contextmenuY]="contextmenuY" (colorCodeData)="receiveColorCode($event)"></app-context-menu>
+</div>

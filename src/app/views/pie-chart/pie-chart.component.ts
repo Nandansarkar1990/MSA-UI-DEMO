@@ -8,6 +8,12 @@ import { ChartService } from '../../service/chart.service';
 })
 export class PieChartComponent implements OnInit {
   Data: any;
+  contextmenu = false;
+  contextmenuX = 0;
+  contextmenuY = 0;
+  currentTriggerdEvent;
+  // updatedColor;
+
   jsonData = [];
   // single = [
   //   {
@@ -55,4 +61,23 @@ export class PieChartComponent implements OnInit {
     console.log(event);
   }
 
+  onrightClick(event){
+    event.preventDefault();
+    console.log(event);
+    this.contextmenuX=event.clientX
+    this.contextmenuY=event.clientY
+    this.contextmenu=true;
+    this.currentTriggerdEvent = event;
+  }
+
+  disableContextMenu(){
+      this.contextmenu= false;
+  }
+
+  receiveColorCode(event) {
+    console.log("printed from bar chart"+ event);
+    var getcolorFromOUter = this.currentTriggerdEvent.target.outerHTML.split("fill")[1].split("=")[1].split(" ")[0].replace(/[\"]/g, "");
+    this.currentTriggerdEvent.target.outerHTML = this.currentTriggerdEvent.target.outerHTML.replace(getcolorFromOUter, event);
+    this.contextmenu= false;
+  }
 }
