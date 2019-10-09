@@ -18,12 +18,9 @@ export class BubbleChartComponent implements OnInit {
   contextmenuX = 0;
   contextmenuY = 0;
   currentTriggerdEvent;
-  // dataset = {
-  //   "children": [{ "Name": "VeriFone Inc", "Count": 2520678.7 },
-  //   { "Name": "Creative Mobile Technologies, LLC", "Count": 856750.11 }]
-  // };
+  
   constructor(private chartData: ChartService) {
-    // this.d3 = new d3();
+    
   }
 
   ngOnInit() {

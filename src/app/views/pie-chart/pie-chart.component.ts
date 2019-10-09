@@ -12,22 +12,10 @@ export class PieChartComponent implements OnInit {
   contextmenuX = 0;
   contextmenuY = 0;
   currentTriggerdEvent;
-  // updatedColor;
 
   jsonData = [];
-  // single = [
-  //   {
-  //     "name": "VeriFone Inc",
-  //     "value": 2520678.7
-  //   },
-  //   {
-  //     "name": "Creative Mobile Technologies, LLC",
-  //     "value": 856750.11
-  //   }
-  // ];
   view: any[] = [630, 320];
 
-  // options
   showLegend = false;
 
   colorScheme = {

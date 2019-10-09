@@ -4,6 +4,7 @@ import { ChartsModule } from 'ng2-charts';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
@@ -21,6 +22,7 @@ import { ContextMenuComponent } from '../context-menu/context-menu.component';
     ChartsModule,
     BsDropdownModule,
     NgxChartsModule,
+    DragDropModule,
     ButtonsModule.forRoot()
   ],
   declarations: [ 
