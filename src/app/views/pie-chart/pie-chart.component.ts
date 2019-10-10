@@ -12,6 +12,8 @@ export class PieChartComponent implements OnInit {
   contextmenuX = 0;
   contextmenuY = 0;
   currentTriggerdEvent;
+  selectedVen;
+  globalData;
 
   jsonData = [];
   view: any[] = [630, 320];
@@ -28,6 +30,12 @@ export class PieChartComponent implements OnInit {
   constructor(private chartData: ChartService) {
   }
   ngOnInit() {
+    this.chartData.selectedVendor.subscribe((data) => {
+      this.selectedVen = data;
+      if(this.selectedVen) {
+        this.updateJsonData();
+      }
+    })
     this.chartData.getData()
       .subscribe((res) => {
         this.Data = res;
@@ -36,6 +44,15 @@ export class PieChartComponent implements OnInit {
       });
   }
 
+  private updateJsonData() {
+    this.jsonData = this.globalData;
+    this.jsonData = this.jsonData.filter((data) => {
+      if(this.selectedVen.includes(data.name)) {
+        return data;
+      }; 
+    })
+  }
+  
   private generateJson(rows) {
     this.jsonData = rows;
 
@@ -44,6 +61,7 @@ export class PieChartComponent implements OnInit {
       data.value = data['Total_Amount_CY'];
       return data;
     })
+    this.globalData = this.jsonData;
   };
   onSelect(event) {
     console.log(event);

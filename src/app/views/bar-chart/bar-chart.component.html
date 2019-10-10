@@ -11,7 +11,7 @@
   [showYAxisLabel]="showYAxisLabel"
   [xAxisLabel]="xAxisLabel"
   [yAxisLabel]="yAxisLabel"
-  (click)="disableContextMenu()"
+  (click)="drillDownData($event);"
   (contextmenu)="onrightClick($event)">
 </ngx-charts-bar-vertical>
 

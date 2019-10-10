@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Subject } from 'rxjs';
 import * as $ from 'jquery'
 
 @Injectable({
@@ -10,6 +11,7 @@ export class ChartService {
   API_KEY = 'YOUR_API_KEY';
   authToken = undefined;
   auth = undefined;
+  selectedVendor = new Subject();
   constructor(private http: HttpClient) { }
 
   // public getAuthToken() {
@@ -55,4 +57,5 @@ export class ChartService {
       }
       return this.http.post(`http://localhost:9000/msa_poc/v1/data`, payload, {headers: reqHeader})
   }
+  
 }

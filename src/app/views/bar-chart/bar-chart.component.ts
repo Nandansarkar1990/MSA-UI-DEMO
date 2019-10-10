@@ -1,3 +1,4 @@
+declare var $:any;
 import { Component, ViewEncapsulation, OnInit, Input, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 
 import * as d3 from 'd3-selection';
@@ -75,9 +76,9 @@ export class BarChartComponent implements OnInit {
         this.currentTriggerdEvent = event;
     }
 
-    disableContextMenu(){
-        this.contextmenu= false;
-    }
+    // disableContextMenu(){
+    //     this.contextmenu= false;
+    // }
 
     receiveColorCode(event) {
         this.updatedColor = event;
@@ -100,5 +101,20 @@ export class BarChartComponent implements OnInit {
                 }
             }
         }
+    }
+
+    private drillDownData(event) {
+        this.contextmenu= false;
+        console.log("drillDown event" +event);
+        let html = event.target.outerHTML;
+        let el = $(html);
+        let obj = {
+            label: el.attr("aria-label"),
+            text: el.text(),
+            element: el.prop("tagName")
+        };
+        let selectedItem = obj.label;
+        // this.chartData.updateChart();
+        this.chartData.selectedVendor.next(selectedItem);
     }
 }
